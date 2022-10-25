@@ -5,16 +5,16 @@ const morgan = require('morgan');
 const path = require('path')
 
 function timeToEnglish(ms){
-  const days = ms/86400000
+  const days = Math.floor(ms/86400000)
   ms = ms%86400000
-  const hours = ms/3600000
+  const hours = Math.floor(ms/3600000)
   ms = ms%3600000
-  const minute = ms/60000
+  const minute = Math.floor(ms/60000)
   ms = ms%60000
-  const seconds = ms/1000
+  const seconds = Math.floor(ms/1000)
   ms = ms%1000
 
-  return `${days}, days, ${hours}, hours, ${minutes}, minutes, ${seconds}, seconds`
+  return `posted ${days}, days, ${hours}, hours, ${minute}, minutes, ${seconds}, seconds ago`
 }
 
 
@@ -42,7 +42,7 @@ app.get("/", (req, res) => {
             <small>(by ${post.name})</small>
           </p>
           <small class="news-info">
-            ${post.upvotes} upvotes | ${time - post.date}
+            ${post.upvotes} upvotes | ${timeToEnglish(time-post.date)}
           </small>
         </div>`
       ).join('')}
